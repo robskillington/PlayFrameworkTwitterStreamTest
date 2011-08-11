@@ -1,0 +1,13 @@
+#{extends 'main.html' /}
+#{set title:'Stream' /}
+
+#{if latestStatuses.size() > 0}
+	<ul>
+	#{list items:latestStatuses, as:'status'}
+		<li>${status.getUser().getName()}: ${status.getText()}</li>
+	#{/list}
+	</ul>
+#{/if}
+#{else}
+	<p>No new updates</p>
+#{/else}

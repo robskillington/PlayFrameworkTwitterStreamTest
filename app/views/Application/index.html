@@ -1,0 +1,51 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+<script type="text/javascript">
+(function ($) {
+
+	TweetStream = (function () {
+	
+		var _this = new Object();
+		
+		$.extend(_this, {
+			start: function () {
+				_this.getMessages();
+			},
+			
+			getMessages: function () {
+				var tweetList = $('#tweets');
+			
+				$.ajax({
+					url: '@{stream()}',
+					success: function (statuses) {
+						$.each(statuses, function (i, status) {
+							var li = $('<li />').text(status.user.name + ': ' + status.text);
+						
+							tweetList.prepend(li);
+						});
+					},
+					complete: function() {
+						_this.getMessages();
+					},
+					dataType: 'json'
+				});			
+			}
+		});
+		
+		return _this;
+	
+	})();
+
+
+	$(function () {
+		TweetStream.start();
+	});
+})(jQuery);
+</script>
+
+Tweets (all tweets for #IfIWereU):
+
+<ul id="tweets">
+
+</ul>
