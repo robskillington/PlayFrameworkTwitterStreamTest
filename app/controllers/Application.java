@@ -31,9 +31,8 @@ public class Application extends Controller {
 
 		ArrayList<Status> latestStatuses = twitterStreamer.getLatestStatuses();
 
-		while (latestStatuses.size() < 1) {
+		if (latestStatuses.size() < 1) {
 			suspend(100);
-			latestStatuses = twitterStreamer.getLatestStatuses();
 		}
 
 		renderJSON(latestStatuses);
